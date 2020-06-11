@@ -1,0 +1,121 @@
+<div >
+  <mat-sidenav-container class="cont" >
+      <mat-sidenav-content>
+        <mat-toolbar class="header-box">
+          <span class="title" >Contacts Number</span>
+          <div fxFlex fxLayout fxLayoutAlign="flex-end">
+            <button mat-raised-button class="logoutBtn" (click)="logout()">
+              Logout
+            </button>
+          </div>
+        </mat-toolbar>
+  <mat-card class="main" >
+     <div >
+        <mat-card-title>Add New Contact</mat-card-title>
+            <mat-card-content class="matCardContent">
+              <form [formGroup]="newContactForm" (ngSubmit)="addNewContact()">
+                <div class="inputs" [ngClass]="{'has-error': newContactForm.get('name').errors && isFormSubmitted}">
+                  <input type="text" class="form-control" placeholder="Name" formControlName="name">
+                  <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                  <span *ngIf="newContactForm.hasError('required', ['name']) && isFormSubmitted" class="text-danger">
+                    Name is required.
+                  </span>
+                </div>
+                <div class="inputs" [ngClass]="{'has-error': newContactForm.get('phone').errors && isFormSubmitted}">
+                  <input type="text" class="form-control" placeholder="Phone" formControlName="phone">
+                  <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                  <span *ngIf="newContactForm.hasError('required', ['phone']) && isFormSubmitted" class="text-danger">
+                    Phone is required.
+                  </span>
+                </div>
+                <div class="inputs" [ngClass]="{'has-error': newContactForm.get('address').errors && isFormSubmitted}">
+                  <input type="text" class="form-control" placeholder="Adress" formControlName="address">
+                  <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                  <span *ngIf="newContactForm.hasError('required', ['address']) && isFormSubmitted" class="text-danger">
+                    Address is required.
+                  </span>
+                </div>
+                <div class="inputs" >
+                  <input type="text" class="form-control" placeholder="Notes" formControlName="notes">
+                </div>
+                <button mat-raised-button type="submit">Save</button>
+              </form>
+          </mat-card-content>
+     </div>
+  </mat-card>
+
+  <div >
+    <div class="example-container" >
+         <div class="form">
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" >
+        </div>
+        <mat-table class="matTable" #table [dataSource]="dataSource" >
+      
+          <!-- Name Column -->
+          <ng-container matColumnDef="name" >
+            
+            <mat-header-cell *matHeaderCellDef ><input matInput  (keyup)="applyFilter($event.target.value,'name')" placeholder="Name" ></mat-header-cell>
+            <mat-cell *matCellDef="let element;let i=index" >
+              <input *ngIf="editFlag == i" type="text" [(ngModel)]="editedContact.name" placeholder="name" >
+              <p *ngIf="editFlag != i">{{element.name}}</p>
+            </mat-cell>
+          </ng-container>
+  
+          <!-- phone Column -->
+          <ng-container matColumnDef="phone">
+            <mat-header-cell *matHeaderCellDef ><input matInput  (keyup)="applyFilter($event.target.value,'phone')" placeholder="Phone" ></mat-header-cell>
+            <mat-cell *matCellDef="let element;let i=index"> 
+              <input *ngIf="editFlag == i" type="text" [(ngModel)]="editedContact.phone" placeholder="phone" >
+              <p *ngIf="editFlag != i">{{element.phone}} </p>
+            </mat-cell>
+          </ng-container>
+  
+          <!-- Address Column -->
+          <ng-container matColumnDef="address">
+              <mat-header-cell *matHeaderCellDef ><input matInput  (keyup)="applyFilter($event.target.value,'address')" placeholder="Address" ></mat-header-cell>
+              <mat-cell *matCellDef="let element;let i=index"> 
+              <input *ngIf="editFlag == i" type="text" [(ngModel)]="editedContact.address" placeholder="address">
+
+                <p *ngIf="editFlag != i">{{element.address}}</p>
+               </mat-cell>
+            </ng-container>
+            <!-- Notes Column -->
+            <ng-container matColumnDef="notes">
+              <mat-header-cell *matHeaderCellDef ><input matInput  (keyup)="applyFilter($event.target.value,'notes')" placeholder="Notes" ></mat-header-cell>
+              <mat-cell *matCellDef="let element;let i=index">
+              <input *ngIf="editFlag == i" type="text" [(ngModel)]="editedContact.notes" placeholder="notes" >
+              <p *ngIf="editFlag != i">{{element.notes}} </p>
+              </mat-cell>
+            </ng-container>
+
+                <ng-container matColumnDef="actions">
+                  <mat-header-cell *matHeaderCellDef >Actions</mat-header-cell>
+                  <mat-cell *matCellDef="let row;let i=index" >
+                       <i *ngIf="editFlag != i"(click)="edit(i,row)" class="material-icons editButton">
+                        edit
+                        </i>
+                       <i *ngIf="editFlag != i" (click)="delete(row._id)" class="material-icons deleteButton">
+                        delete
+                        </i> 
+                        <i *ngIf="editFlag == i"(click)="saveEdit()" class="material-icons editButton">
+                          check
+                          </i>
+                         <i *ngIf="editFlag == i" (click)="cancel()" class="material-icons deleteButton">
+                          cancel
+                          </i> 
+                      </mat-cell>
+              </ng-container> 
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      
+        <mat-paginator #paginator
+                       [pageSize]="5"
+                       [pageSizeOptions]="[5, 10, 20]"
+                       [showFirstLastButtons]="true">
+        </mat-paginator>
+      </div>
+    </div>
+    </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

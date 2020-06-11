@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+.matCardContent{
+  display:block
+}
+.logoutBtn{
+  color: red;
+}
+.header-box{
+  background-color: #E76A6B;
+}
+.matTable{
+  background-color:#fff0f6
+}
+.main{
+  background-color:#fff0f6;
+  margin:0;
+  
+  div{
+      position:relative;
+      clear:both; 
+      margin:0; 
+      padding:10px;
+  }
+  button{
+      background-color:green;
+      color:white
+  }
+}
+
+  .cont {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .title{
+    margin: 0 16px;
+    font-size:25px;
+    font-weight:bold;
+    color:white;
+    margin: 0 16px 0 16px;
+  }
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    top:80px;
+    width: 80%;
+    padding: 70px 0;
+    border: 3px solid rgb(231, 106, 107);
+    text-align: center;
+    margin: 0 auto;
+  }
+  
+  .form {
+    min-height: 56px;
+    max-height: 56px;
+    display: flex;
+    align-items: center;
+    padding: 8px 24px 0;
+    font-size: 20px;
+    justify-content: space-between;
+    border-bottom: 1px solid transparent;
+  }
+  .editButton{
+    color: green;
+  }
+  .deleteButton{
+    color: red;
+    margin-left: 7px;
+  }

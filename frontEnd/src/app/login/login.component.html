@@ -1,0 +1,28 @@
+<div>
+  <div>
+<div class="login">
+  <h2 class="login-header">Contacts Number</h2>
+  <form [formGroup]="loginForm" class="login-container" (ngSubmit)="login()">
+
+    <div class="inputs" [ngClass]="{'has-error': loginForm.get('userName').errors && isFormSubmitted}">
+      <input type="text" class="form-control" placeholder="User Name" formControlName="userName">
+      <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+
+      <span *ngIf="loginForm.hasError('required', ['userName']) && isFormSubmitted" class="text-danger">
+        User Name is required.
+      </span>
+      
+    </div>
+   
+    <div class="inputs"  [ngClass]="{'has-error' : loginForm.get('password').errors && isFormSubmitted}">
+      <input type="password" class="form-control" placeholder="Password" formControlName="password">
+      <span *ngIf="loginForm.hasError('required', ['password']) && isFormSubmitted" class="text-danger">
+        Password is required.
+      </span>
+    </div>
+
+    <p>
+      <input type="submit" value="Login">
+    </p>
+  </form>
+</div>

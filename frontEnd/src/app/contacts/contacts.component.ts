@@ -14,6 +14,7 @@ import { Element} from './contact'
 export class ContactsComponent implements OnInit {
   editedContact : Element;
   newContactForm: FormGroup;
+  user = localStorage.getItem('user');
   isFormSubmitted  =  false;
   editFlag = -1;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -29,12 +30,40 @@ export class ContactsComponent implements OnInit {
 
   ngOnInit() {
     this.buildForms();
+    this.getContacts();
+  }
+  checkForLock(row){
+    // console.log(row['user']);
+    // console.log(localStorage.getItem('user'));
+    // return row['user'] ==  localStorage.getItem('user');
+    if(row['user'] && row['user'] !=  localStorage.getItem('user')){
+      // console.log();
+      
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+  getContacts(){
+    setInterval(() => {
+      this.contactService.getAllContacts().subscribe(res=>{
+        this.dataSource.data = res;
+      })
+    }, 10000); 
+  }
+  keyPress(event: any) {
+    const pattern = /[0-9\+\-\ ]/;
+
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+  buildForms(){
     this.contactService.getAllContacts().subscribe(res=>{
       this.dataSource.data = res;
     })
-  }
-
-  buildForms(){
     this.newContactForm  =  this.formBuilder.group({
       name: ['', [Validators.required]],
       address: ['', [Validators.required]],
@@ -90,6 +119,8 @@ export class ContactsComponent implements OnInit {
   }
 
   edit(i,row){
+    // console.log(row);
+    
     this.editFlag = i;
     this.editedContact=row;
   }

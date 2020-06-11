@@ -33,12 +33,7 @@ export class ContactsComponent implements OnInit {
     this.getContacts();
   }
   checkForLock(row){
-    // console.log(row['user']);
-    // console.log(localStorage.getItem('user'));
-    // return row['user'] ==  localStorage.getItem('user');
     if(row['user'] && row['user'] !=  localStorage.getItem('user')){
-      // console.log();
-      
       return false;
     }
     else {
@@ -54,7 +49,6 @@ export class ContactsComponent implements OnInit {
   }
   keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;
-
     let inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
@@ -81,7 +75,7 @@ export class ContactsComponent implements OnInit {
     this.contactService.addContact(contact).subscribe(data=>{      
       if(data['message']=='Success'){        
         this.toastr.success('Contact added Successfully');
-        location.reload();
+        // location.reload();
       }
       else this.toastr.error('Something wrong happened!');
     }) 
@@ -93,7 +87,7 @@ export class ContactsComponent implements OnInit {
           this.contactService.deleteContact(id).subscribe(data=>{
             if(data['message']='Success'){
               this.toastr.success('Contact removed successfuly');
-              location.reload();
+              // location.reload();
             }
            else this.toastr.error('Something wrong happened ')
           });
@@ -119,8 +113,6 @@ export class ContactsComponent implements OnInit {
   }
 
   edit(i,row){
-    // console.log(row);
-    
     this.editFlag = i;
     this.editedContact=row;
   }
@@ -142,7 +134,7 @@ export class ContactsComponent implements OnInit {
     this.contactService.editContact(this.editedContact).subscribe(data=>{
       if(data['message']=='Success'){        
         this.toastr.success('Contact Edited Successfully');
-        location.reload();
+        // location.reload();
       }
       else this.toastr.error('Something wrong happened!');
     })
